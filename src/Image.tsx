@@ -3,9 +3,12 @@
 
 import { css } from "@emotion/react";
 
-type ImgElementProps = {}; // FIXME
+type ImgElementProps = {
+  src: string,
+  alt?: string,
+};
 
-interface ImageProps extends ImgElementProps {}
+interface ImageProps extends ImgElementProps { }
 
 export default function Image(props: ImageProps): JSX.Element {
   return (
