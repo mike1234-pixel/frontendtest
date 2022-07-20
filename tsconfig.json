@@ -7,7 +7,8 @@
       "esnext"
     ],
     "types": [
-      "@emotion/react/types/css-prop"
+      "@emotion/react/types/css-prop",
+      "cypress"
     ],
     "allowJs": true,
     "skipLibCheck": true,

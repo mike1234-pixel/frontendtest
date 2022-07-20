@@ -27,13 +27,14 @@ function App() {
       <Image
         src="https://apod.nasa.gov/apod/image/2206/Arp286-202203-CDK24-FLIPL9000-LRGB_NicolasROLLAND_signature_LD1024.jpg"
         alt="Image 1"
-        loadingIcon={<Spinner/>}
+        loadingIcon={<Spinner />}
         threshold={0}
       />
 
       <Image
         src="https://apod.nasa.gov/apod/image/2206/CygWideHa-OIIIBiColorImage2_crop2_1024.jpg"
         alt="Image 2"
+        id="secondImage"
       />
 
       <Image

@@ -7,6 +7,7 @@ import Spinner from "./Spinner";
 interface ImgElementProps {
   src: string;
   alt?: string;
+  id?: string; // for cypress testing only
 }
 
 interface ImageProps extends ImgElementProps {
@@ -15,7 +16,7 @@ interface ImageProps extends ImgElementProps {
 }
 
 export default function Image(props: ImageProps): JSX.Element {
-  const { src, alt, threshold = 0.9, loadingIcon = <Spinner /> } = props;
+  const { src, alt, threshold = 0.9, loadingIcon = <Spinner />, id } = props;
 
   const ref = useRef<HTMLImageElement | null>(null);
 
@@ -75,10 +76,10 @@ export default function Image(props: ImageProps): JSX.Element {
     ); // callback is triggered when threshold is reached https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
 
     observer.observe(ref.current);
-  }, [ref]);
+  }, [ref, threshold]);
 
   return (
-    <div css={imageContainerStyles()}>
+    <div css={imageContainerStyles()} data-testid="test-image">
       <div css={spinnerContainerStyles(ref)}>{loadingIcon}</div>
 
       <img
@@ -86,6 +87,7 @@ export default function Image(props: ImageProps): JSX.Element {
         src={ref.current === intersectedElementRef ? `data:,` : src} // if image has enterered the viewport, this should be src, otherwise a placeholder src
         ref={ref}
         css={imageStyles(ref)}
+        id={id}
       />
     </div>
   );
