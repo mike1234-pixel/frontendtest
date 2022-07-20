@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import Image from "./Image";
 import "./reset.css";
-
 import { css } from "@emotion/react";
+
+// const Image = React.lazy(() => import('./Image'));
 
 function App() {
   return (
