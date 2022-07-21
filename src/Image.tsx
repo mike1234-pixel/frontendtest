@@ -7,7 +7,7 @@ import Spinner from "./Spinner";
 interface ImgElementProps {
   src: string;
   alt?: string;
-  id?: string; // for cypress testing only
+  testId?: string;
 }
 
 interface ImageProps extends ImgElementProps {
@@ -16,12 +16,20 @@ interface ImageProps extends ImgElementProps {
 }
 
 export default function Image(props: ImageProps): JSX.Element {
-  const { src, alt, threshold = 0.9, loadingIcon = <Spinner />, id } = props;
+  const {
+    src,
+    alt,
+    threshold = 0.9,
+    loadingIcon = <Spinner />,
+    testId,
+  } = props;
 
   const ref = useRef<HTMLImageElement | null>(null);
 
   const [intersectedElementRef, setIntersectedElementRef] =
     useState<RefObject<HTMLImageElement> | null>(null);
+
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   const imageContainerStyles = () => css`
     max-width: 100%;
@@ -32,12 +40,12 @@ export default function Image(props: ImageProps): JSX.Element {
     margin-bottom: 30px;
   `;
 
-  const imageStyles = (ref: RefObject<HTMLImageElement>) => css`
-    transition: all 0.4s;
+  const imageStyles = () => css`
+    transition: opacity 0.4s;
     width: 100%;
     height: 100%;
     display: block;
-    ${ref.current === intersectedElementRef
+    ${!loaded
       ? `
     opacity: 0;  
     `
@@ -46,8 +54,8 @@ export default function Image(props: ImageProps): JSX.Element {
     `}
   `;
 
-  const spinnerContainerStyles = (ref: RefObject<HTMLImageElement>) => css`
-    ${ref.current === intersectedElementRef
+  const spinnerContainerStyles = () => css`
+    ${!loaded
       ? `
       position: absolute;
       left: 50%;
@@ -80,14 +88,15 @@ export default function Image(props: ImageProps): JSX.Element {
 
   return (
     <div css={imageContainerStyles()} data-testid="test-image">
-      <div css={spinnerContainerStyles(ref)}>{loadingIcon}</div>
+      <div css={spinnerContainerStyles()}>{loadingIcon}</div>
 
       <img
         alt={alt}
         src={ref.current === intersectedElementRef ? `data:,` : src} // if image has enterered the viewport, this should be src, otherwise a placeholder src
         ref={ref}
-        css={imageStyles(ref)}
-        id={id}
+        css={imageStyles()}
+        data-testid={testId}
+        onLoad={() => setLoaded(true)} // trigger css changes after src is loaded in, so that fade occurs after image load
       />
     </div>
   );

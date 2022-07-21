@@ -78,3 +78,9 @@ Once completed, commit your changes with the commit message "Part 5".
 ## Once you are done
 
 Push all your committed changes to your forked repo on Github. Do not initiate a Pull Request or else other candidates will see your answer. Email the URL of the forked repo back to us for assessment. Thank you.
+
+## Testing
+
+To run the unit tests run `npm test`
+
+To run the integration tests with _cypress_ run `npm run cypress:open` to open the launchpad, and select e2e testing.

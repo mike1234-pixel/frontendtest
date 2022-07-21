@@ -1,6 +1,7 @@
 {
   "name": "frontendtest",
   "version": "0.1.0",
+  "homepage": "https://mike1234-pixel.github.io/frontendtest",
   "private": true,
   "dependencies": {
     "@emotion/css": "^11.9.0",
@@ -23,11 +24,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "tsc": "tsc"
+    "tsc": "tsc",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +55,7 @@
   "devDependencies": {
     "cypress": "^10.3.1",
     "eslint-plugin-cypress": "^2.12.1",
+    "gh-pages": "^4.0.0",
     "intersection-observer": "^0.12.2"
   }
 }

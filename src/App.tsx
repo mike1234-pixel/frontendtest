@@ -34,7 +34,7 @@ function App() {
       <Image
         src="https://apod.nasa.gov/apod/image/2206/CygWideHa-OIIIBiColorImage2_crop2_1024.jpg"
         alt="Image 2"
-        id="secondImage"
+        testId="secondTestImage"
       />
 
       <Image
