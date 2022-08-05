@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef, RefObject } from "react";
 import { css } from "@emotion/react";
 import Spinner from "./Spinner";
+import useEnteredViewport from "./hooks/useEnteredViewport";
 
 interface ImgElementProps {
   src: string;
@@ -26,10 +27,9 @@ export default function Image(props: ImageProps): JSX.Element {
 
   const ref = useRef<HTMLImageElement | null>(null);
 
-  const [intersectedElementRef, setIntersectedElementRef] =
-    useState<RefObject<HTMLImageElement> | null>(null);
+  const enteredViewPortState = useEnteredViewport(ref, threshold);
 
-  const [loaded, setLoaded] = useState<boolean>(false);
+  const { intersectedElementRef, loaded, setLoaded } = enteredViewPortState;
 
   const imageContainerStyles = () => css`
     max-width: 100%;
@@ -66,25 +66,6 @@ export default function Image(props: ImageProps): JSX.Element {
      display: none;
       `}
   `;
-
-  useEffect(() => {
-    // if no image ref or it does not have a current property
-    if (!ref?.current) return;
-
-    const observer: IntersectionObserver = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIntersectedElementRef(ref);
-
-          // once the image has entered the viewport, stop observing it
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: threshold }
-    ); // callback is triggered when threshold is reached https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
-
-    observer.observe(ref.current);
-  }, [ref, threshold]);
 
   return (
     <div css={imageContainerStyles()} data-testid="test-image">
